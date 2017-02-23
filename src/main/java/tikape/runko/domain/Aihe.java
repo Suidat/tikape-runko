@@ -8,6 +8,6 @@ public class Aihe {
         this.id = id;
         this.name = name;
     }
-
+    public int getId(){return this.id;}
 
 }
