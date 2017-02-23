@@ -9,9 +9,11 @@
     <body>
         <h1>Tervetuloa!</h1>
 
-        <p th:each="aihe : ${aihelista}">
-            <span th:text="${aihe.nimi}">jotain?</span>
-        </p>
+        <ul>
+            <p th:each="aihe : ${aihelista}">
+                <span th:text="${aihe.nimi}">jotain?</span>
+             </p>
+        <ul>
 
         <p><a href="/opiskelijat">Tästä opiskelijalistaukseen.</a></p>
     </body>
