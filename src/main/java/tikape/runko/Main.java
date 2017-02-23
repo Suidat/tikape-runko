@@ -26,6 +26,7 @@ public class Main {
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
+
             map.put("aihelista", aiheDao.findAll());
 
             return new ModelAndView(map, "index");
