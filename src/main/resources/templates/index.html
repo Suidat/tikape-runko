@@ -11,7 +11,7 @@
 
         <ul>
             <p th:each="aihe : ${aihelista}">
-                <span th:text="${aihe.nimi}">jotain?</span>
+                <span th:text="${aihe.nimi}">jotain?</span> <a th:href="${'/'+aihe.id}">linkki</a>
              </p>
         </ul>
 
