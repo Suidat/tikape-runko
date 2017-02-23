@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title><span th:text="${title}"></span></title>
 </head>
 <body>
 
+        <ul>
+            <p th:each="aihe : ${aihelista}">
+                <span th:text="${aihe.nimi}">jotain?</span> <a th:href="${'/'+aihe.id}">linkki</a>
+             </p>
+        </ul>
+
+        <p><a href="/opiskelijat">Tästä opiskelijalistaukseen.</a></p>
 </body>
 </html>
