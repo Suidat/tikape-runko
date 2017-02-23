@@ -10,7 +10,7 @@
         <h1>Tervetuloa!</h1>
 
         <p th:each="aihe : ${aihelista}">
-            <span th:text="${aihe}">jotain?</span>
+            <span th:text="${aihe.nimi}">jotain?</span>
         </p>
 
         <p><a href="/opiskelijat">Tästä opiskelijalistaukseen.</a></p>
