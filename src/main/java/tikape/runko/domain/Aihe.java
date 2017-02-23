@@ -9,6 +9,6 @@ public class Aihe {
         this.nimi = nimi;
     }
     public int getId(){return this.id;}
-
+    public String getNimi(){return this.nimi;}
 }
     
