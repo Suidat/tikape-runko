@@ -14,6 +14,7 @@ public class Main {
         database.init();
 
         OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
+        //opiskelijaDao.delete(3);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import tikape.runko.domain.Opiskelija;
 
 public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
@@ -69,7 +70,13 @@ public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
-        // ei toteutettu
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM Opiskelija WHERE id = " + key);
+        stmt.execute();
+        stmt.close();
+        connection.close();
+
     }
+
 
 }

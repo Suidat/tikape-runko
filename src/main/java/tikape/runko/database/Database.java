@@ -43,7 +43,8 @@ public class Database {
         lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Platon');");
         lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Aristoteles');");
         lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Homeros');");
-
+        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Homeros');");
+        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Hermanni');");
         return lista;
     }
 }
