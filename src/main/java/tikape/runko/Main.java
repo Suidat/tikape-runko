@@ -43,10 +43,10 @@ public class Main {
 
         get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-                    map.put("title", aiheDao.findOne(Integer.parseInt(req.params("id"))).getNimi());
+                    map.put("title", aiheDao.findOne(Integer.parseInt(req.params("id"))));
                     map.put("keskustelulista", keskusteluDao.findAll());
 
-            return new ModelAndView(map,"keskustelut");
+            return new ModelAndView(map,"Aihe");
                 }, new ThymeleafTemplateEngine());
 
         get("/opiskelijat/:id", (req, res) -> {

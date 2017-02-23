@@ -15,10 +15,15 @@ public class AiheDao implements Dao<Aihe, Integer> {
     public Aihe findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Aihe WHERE id = ?");
+        stmt.setObject(1, key);
+
 
         ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if(!hasOne) return null;
+
             Integer id = rs.getInt("id");
-            String nimi = rs.getString("Aihe");
+                String nimi = rs.getString("aihe");
             Aihe aihe = new Aihe(id, nimi);
 
         rs.close();

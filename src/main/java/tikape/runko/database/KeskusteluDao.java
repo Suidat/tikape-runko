@@ -24,7 +24,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
 
         ResultSet rs = stmt.executeQuery();
         Integer id = rs.getInt("id");
-        String nimi = rs.getString("Keskustelu");
+        String nimi = rs.getString("nimi");
         Keskustelu keskustelu = new Keskustelu(id, nimi);
 
         rs.close();
@@ -45,6 +45,8 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
+
+
             keskustelut.add(new Keskustelu(id, nimi));
         }
 
