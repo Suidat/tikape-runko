@@ -3,6 +3,7 @@ package tikape.runko.database;
 import tikape.runko.domain.Viesti;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViestiDao implements Dao<Viesti, Integer> {
@@ -40,7 +41,25 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
     @Override
     public List<Viesti> findAll() throws SQLException {
-        return null;
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestit");
+
+        ResultSet rs = stmt.executeQuery();
+        List<Viesti> viestit = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String lahettaja = rs.getString("lahettaja");
+            String sisalto = rs.getString("viesti");
+            Date aika = rs.getDate("aika");
+            viestit.add(new Viesti(id, sisalto, lahettaja, aika ));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return viestit;
+
     }
 
     @Override

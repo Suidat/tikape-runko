@@ -1,24 +1,32 @@
 package tikape.runko;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
-import tikape.runko.database.Database;
-import tikape.runko.database.OpiskelijaDao;
+import tikape.runko.database.*;
+import tikape.runko.domain.Aihe;
+import tikape.runko.domain.Viesti;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:opiskelijat.db");
+        Database database2  = new Database("jdbc:sqlite:opiskelijat.db");
+        Database database = new Database("jdbc:sqlite:keskustelupalsta.db");
         database.init();
 
-        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
-        //opiskelijaDao.delete(3);
+        ViestiDao viestiDao = new ViestiDao(database);
+        KeskusteluDao keskusteluDao = new KeskusteluDao(database);
+        AiheDao aiheDao = new AiheDao(database );
+
+        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database2);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
+            map.put("aihelista", aiheDao.findAll());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
