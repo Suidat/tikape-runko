@@ -7,8 +7,8 @@
 <body>
 
         <ul>
-            <p th:each="aihe : ${aihelista}">
-                <span th:text="${aihe.nimi}">jotain?</span> <a th:href="${'/'+aihe.id}">linkki</a>
+            <p th:each="keskustelu : ${keskustelulista}">
+                <span th:text="${keskustelu.nimi}">jotain?</span> <a th:href="${'/'+keskustelu.id}">linkki</a>
              </p>
         </ul>
 
