@@ -3,8 +3,8 @@ package tikape.runko.database;
 import tikape.runko.domain.Viesti;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Date;
 
 public class ViestiDao implements Dao<Viesti, Integer> {
     private Database database;
@@ -74,8 +74,8 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("sender");
             String sisalto = rs.getString("message");
-            String aika = rs.getDate("time").toString();
-            viestit.add(new Viesti(id, sisalto, lahettaja, aika ));
+            String aika = rs.getString("time");
+            viestit.add(new Viesti(id, sisalto, lahettaja, aika));
         }
 
         rs.close();
