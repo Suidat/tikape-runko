@@ -28,7 +28,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Integer id = rs.getInt("id");
         String sisalto = rs.getString("sisältö");
         String lahettaja = rs.getString("lahettaja");
-        Date aika = rs.getDate("aika");
+        String aika = rs.getString("aika");
 
         Viesti o = new Viesti(id, sisalto, lahettaja, aika);
 
@@ -50,7 +50,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
             String sisalto = rs.getString("viesti");
-            Date aika = rs.getDate("aika");
+            String  aika = rs.getString("aika");
             viestit.add(new Viesti(id, sisalto, lahettaja, aika ));
         }
 
@@ -60,6 +60,50 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
         return viestit;
 
+    }
+
+    public List<Viesti> findAllInKeskustelu(int key) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestit WHERE keskustelu_id = ?");
+        stmt.setObject(1, key);
+
+
+        ResultSet rs = stmt.executeQuery();
+        List<Viesti> viestit = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String lahettaja = rs.getString("sender");
+            String sisalto = rs.getString("message");
+            String aika = rs.getDate("time").toString();
+            viestit.add(new Viesti(id, sisalto, lahettaja, aika ));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return viestit;
+
+    }
+
+    public List<Integer> viestienMaara(int key) throws SQLException{
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(id) AS määrä FROM Viestit" +
+                " WHERE keskustelu_id = ? GROUP BY Keskustelu_id ORDER BY Keskustelu_id");
+        stmt.setObject(1, key);
+
+
+        ResultSet rs = stmt.executeQuery();
+        List<Integer> numero = new ArrayList<>();
+        while (rs.next()) {
+            numero.add(rs.getInt("määrä"));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return numero;
     }
 
     @Override

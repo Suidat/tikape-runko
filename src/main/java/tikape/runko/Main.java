@@ -43,11 +43,22 @@ public class Main {
 
         get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-                    map.put("title", aiheDao.findOne(Integer.parseInt(req.params("id"))));
-                    map.put("keskustelulista", keskusteluDao.findAll());
+            int id = Integer.parseInt(req.params("id"));
+                    map.put("title", aiheDao.findOne(id));
+                    map.put("keskustelulista", keskusteluDao.findAllInAihe(id));
+                    map.put("määrä", viestiDao.viestienMaara(id).toString());
 
             return new ModelAndView(map,"Aihe");
                 }, new ThymeleafTemplateEngine());
+
+        get("/keskustelut/:id", (req, res) ->{
+            HashMap map = new HashMap<>();
+            int id = Integer.parseInt(req.params("id"));
+            map.put("title", keskusteluDao.findOne(id));
+            map.put("viestilista", viestiDao.findAllInKeskustelu(id));
+            return new ModelAndView(map, "Keskustelu");
+        }, new ThymeleafTemplateEngine());
+
 
         get("/opiskelijat/:id", (req, res) -> {
             HashMap map = new HashMap<>();

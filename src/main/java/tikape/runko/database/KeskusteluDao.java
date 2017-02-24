@@ -21,6 +21,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE id = ?");
+        stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
         Integer id = rs.getInt("id");
@@ -39,6 +40,29 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
 
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut");
+
+        ResultSet rs = stmt.executeQuery();
+        List<Keskustelu> keskustelut = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String nimi = rs.getString("nimi");
+
+
+            keskustelut.add(new Keskustelu(id, nimi));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return keskustelut;
+    }
+
+    public List<Keskustelu> findAllInAihe(int key) throws SQLException{
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id=?");
+        stmt.setObject(1, key);
+
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();

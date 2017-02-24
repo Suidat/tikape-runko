@@ -7,11 +7,13 @@
 </head>
 
 <body>
-
+        <pre>       Aihe     Viestien määrä       Viimeisin viesti </pre>
         <ul>
             <p th:each="keskustelu : ${keskustelulista}">
-                <span th:text="${keskustelu.nimi}">jotain?</span> <a th:href="${'/keskustelut/'+keskustelu.id}">linkki</a>
-             </p>
+                <a th:href="${'/keskustelut/'+keskustelu.id}">
+                    <span th:text="${keskustelu.nimi}">jotain?</span></a> <span th:text="${määrä}">  1</span>
+            </p>
+
         </ul>
 
 </body>
