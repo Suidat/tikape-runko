@@ -1,6 +1,7 @@
 package tikape.runko.database;
 
 import tikape.runko.domain.Aihe;
+import tikape.runko.domain.Keskustelu;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,6 +57,26 @@ public class AiheDao implements Dao<Aihe, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
-
+        KeskusteluDao keskusteluDao = new KeskusteluDao(database);
+        Connection connection = database.getConnection();
+        PreparedStatement stmnt = connection.prepareStatement("DELETE FROM Aihe WHERE id = ?");
+        stmnt.setObject(1, key);
+        stmnt.execute();
+        stmnt.close();
+        connection.close();
+        keskusteluDao.deleteFrom(key);
     }
+
+    @Override
+    public void add(Aihe lisattava) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Aihe ('aihe') VALUES (?)");
+        stmnt.setObject(1, lisattava.getNimi());
+        stmnt.execute();
+        stmnt.close();
+        connection.close();
+    }
+
+
+
 }

@@ -78,5 +78,10 @@ public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
 
     }
 
+    @Override
+    public void add(Opiskelija lisattava) throws SQLException {
+
+    }
+
 
 }

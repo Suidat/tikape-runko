@@ -3,6 +3,8 @@ package tikape.runko.database;
 import tikape.runko.domain.Viesti;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -106,8 +108,38 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return numero;
     }
 
+    public void lisaaViesti(Viesti viesti, int keskustelu) throws SQLException{
+
+
+
+        Connection connection = database.getConnection();
+
+        PreparedStatement stmnt = connection.prepareStatement(
+                "INSERT INTO Viestit (sender, message, time,  Keskustelu_id) VALUES (?,?,?,?)");
+
+
+    }
+
     @Override
     public void delete(Integer key) throws SQLException {
 
     }
+
+    public void deleteFrom(Integer keskustelu) throws SQLException{
+        Connection connection = database.getConnection();
+        PreparedStatement stmnt = connection.prepareStatement("DELETE FROM Viestit WHERE keskustelu_id = ?");
+        stmnt.setObject(1, keskustelu);
+        stmnt.execute();
+        stmnt.close();
+
+
+        connection.close();
+    }
+
+    @Override
+    public void add(Viesti lisattava) throws SQLException {
+
+    }
+
+
 }

@@ -4,6 +4,10 @@ public class Aihe {
     private int id;
     private String nimi;
 
+    public Aihe(String nimi){
+        this.nimi=nimi;
+    }
+
     public Aihe(int id, String nimi) {
         this.id = id;
         this.nimi = nimi;

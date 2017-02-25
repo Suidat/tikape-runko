@@ -1,5 +1,9 @@
 package tikape.runko.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Viesti {
     private String timeStamp;
     private String message;
@@ -13,10 +17,12 @@ public class Viesti {
         this.timeStamp = aika;
     }
 
-    public Viesti( String lahettaja, String viesti, String aika){
+    public Viesti( String lahettaja, String viesti){
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
+        Date date = new Date();
         this.message = viesti;
         this.sender = lahettaja;
-        this.timeStamp = aika;
+        this.timeStamp = df.format(date);
     }
 
     public Viesti(){

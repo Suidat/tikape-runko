@@ -1,8 +1,6 @@
 package tikape.runko;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import spark.ModelAndView;
 import static spark.Spark.*;
@@ -10,6 +8,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.*;
 import tikape.runko.domain.Aihe;
 import tikape.runko.domain.Viesti;
+import tikape.runko.domain.Keskustelu;
 
 public class Main {
 
@@ -32,7 +31,17 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
+        post("/uusi", (req,res) -> {
+            aiheDao.add(new Aihe(req.queryParams("nimi")));
+            res.redirect("/ ");
+            return "ok";
+        });
 
+        get("/poista/:id", (req, res)->{
+            aiheDao.delete(Integer.parseInt(req.params(":id")));
+            res.redirect("/");
+            return "ok";
+        });
 
         get("/opiskelijat", (req, res) -> {
             HashMap map = new HashMap<>();

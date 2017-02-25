@@ -20,4 +20,11 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
     public void delete(Integer key) throws SQLException {
 
     }
+
+    @Override
+    public void add(Kayttaja lisattava) throws SQLException {
+
+    }
+
+
 }
