@@ -13,9 +13,10 @@ public class Keskustelu {
         this.nimi = nimi;
     }
 
-    public Keskustelu(String nimi, int aiheId){
+    public Keskustelu(String nimi, int aiheId, String aika){
         this.nimi=nimi;
         this.aiheId=aiheId;
+        this.aika = aika;
     }
     
     public Keskustelu(int tunnus, String nimi, String aika, int aiheId) {

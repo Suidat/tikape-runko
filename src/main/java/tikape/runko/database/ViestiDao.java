@@ -10,6 +10,8 @@ import java.util.Date;
 
 public class ViestiDao implements Dao<Viesti, Integer> {
     private Database database;
+    DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
+    Date date;
 
     public ViestiDao(Database database) {
         this.database = database;

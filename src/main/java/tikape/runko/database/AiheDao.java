@@ -4,6 +4,7 @@ import tikape.runko.domain.Aihe;
 import tikape.runko.domain.Keskustelu;
 
 import java.sql.*;
+import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
 

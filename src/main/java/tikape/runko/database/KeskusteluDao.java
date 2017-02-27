@@ -2,16 +2,16 @@ package tikape.runko.database;
 
 import tikape.runko.domain.Keskustelu;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
+import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class KeskusteluDao implements Dao<Keskustelu, Integer>{
-
-    
     private Database database;
-    
+    DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
+    Date date;
+
     public KeskusteluDao(Database database){this.database = database;}
     
     @Override
