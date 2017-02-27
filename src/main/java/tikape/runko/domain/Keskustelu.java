@@ -7,10 +7,22 @@ public class Keskustelu {
     private String nimi;
     private String aika;
     private int aiheId;
+
+    public Keskustelu(int id, String nimi){
+        this.id = id;
+        this.nimi = nimi;
+    }
+
+    public Keskustelu(String nimi, int aiheId){
+        this.nimi=nimi;
+        this.aiheId=aiheId;
+    }
     
-    public Keskustelu(int tunnus, String nimi) {
+    public Keskustelu(int tunnus, String nimi, String aika, int aiheId) {
         this.id = tunnus;
         this.nimi = nimi;
+        this.aika = aika;
+        this.aiheId = aiheId;
     }
 
     public int getId() {

@@ -43,12 +43,6 @@ public class Main {
             return "ok";
         });
 
-        get("/opiskelijat", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("opiskelijat", opiskelijaDao.findAll());
-
-            return new ModelAndView(map, "opiskelijat");
-        }, new ThymeleafTemplateEngine());
 
         get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -60,6 +54,13 @@ public class Main {
             return new ModelAndView(map,"Aihe");
                 }, new ThymeleafTemplateEngine());
 
+        post("/keskustelu/uusi/:id", (req, res) ->{
+            keskusteluDao.add(new Keskustelu(req.queryParams("nimi"), Integer.parseInt(req.params(":id"))));
+            res.redirect("/:id");
+            return "ok";
+        });
+
+
         get("/keskustelut/:id", (req, res) ->{
             HashMap map = new HashMap<>();
             int id = Integer.parseInt(req.params("id"));
@@ -68,12 +69,5 @@ public class Main {
             return new ModelAndView(map, "Keskustelu");
         }, new ThymeleafTemplateEngine());
 
-
-        get("/opiskelijat/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("opiskelija", opiskelijaDao.findOne(Integer.parseInt(req.params("id"))));
-
-            return new ModelAndView(map, "opiskelija");
-        }, new ThymeleafTemplateEngine());
     }
 }
