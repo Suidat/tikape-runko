@@ -4,11 +4,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import spark.ModelAndView;
 
 import static spark.Spark.*;
 
+import spark.Request;
+import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.*;
 import tikape.runko.domain.Aihe;
@@ -36,6 +39,7 @@ public class Main {
         get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             int id = Integer.parseInt(req.params("id"));
+
             map.put("title", aiheDao.findOne(id));
             map.put("keskustelulista", keskusteluDao.findAllInAihe(id));
             map.put("määrä", viestiDao.viestienMaara(id).toString());
@@ -62,14 +66,23 @@ public class Main {
             return "ok";
         });
 
-        post("/uusi/viesti/:id", (req, res) ->{
-            viestiDao.add(new Viesti());
-            res.redirect("/keskustelut/"+req.params(":id"));
+
+        post("/uusi/viesti/:id", (Request req, Response res) ->{
+            int id = Integer.parseInt(req.params(":id"));
+            viestiDao.add(new Viesti(req.queryParams("lähettäjä"),
+                    req.queryParams("viesti"), id));
+            res.redirect("/keskustelut/"+id);
             return "ok";
         });
 
         get("/poista/aihe/:id", (req, res) -> {
             aiheDao.delete(Integer.parseInt(req.params(":id")));
+            res.redirect("/");
+            return "ok";
+        });
+
+        get("/poista/keskustelu/:id", (req, res) -> {
+            keskusteluDao.delete(Integer.parseInt(req.params(":id")));
             res.redirect("/");
             return "ok";
         });

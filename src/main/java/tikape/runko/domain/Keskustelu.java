@@ -9,7 +9,7 @@ public class Keskustelu {
     private int aiheId;
 
     public Keskustelu(int id, String nimi){
-        this.id = id;
+        this.aiheId = id;
         this.nimi = nimi;
     }
 

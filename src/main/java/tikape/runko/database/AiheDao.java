@@ -59,13 +59,14 @@ public class AiheDao implements Dao<Aihe, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
+        keskusteluDao.deleteFrom(key);
         Connection connection = database.getConnection();
         PreparedStatement stmnt = connection.prepareStatement("DELETE FROM Aihe WHERE id = ?");
         stmnt.setObject(1, key);
         stmnt.execute();
         stmnt.close();
         connection.close();
-        keskusteluDao.deleteFrom(key);
+
     }
 
     @Override

@@ -9,20 +9,25 @@ public class Viesti {
     private String message;
     private String sender;
     private int id;
+    private int keskusteluId;
 
-    public Viesti(int id, String lahettaja, String viesti, String aika){
+    public Viesti(int id, String lahettaja, String viesti, String aika, int keskustelu){
         this.id = id;
         this.message = viesti;
         this.sender = lahettaja;
         this.timeStamp = aika;
+        this.keskusteluId = keskustelu;
     }
 
-    public Viesti( String lahettaja, String viesti){
+
+
+    public Viesti( String lahettaja, String viesti, int keskusteluId){
         DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
         Date date = new Date();
         this.message = viesti;
         this.sender = lahettaja;
         this.timeStamp = df.format(date);
+        this.keskusteluId = keskusteluId;
     }
 
     public Viesti(){

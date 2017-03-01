@@ -7,13 +7,15 @@ import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KeskusteluDao implements Dao<Keskustelu, Integer>{
+public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     private Database database;
     DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
     Date date;
 
-    public KeskusteluDao(Database database){this.database = database;}
-    
+    public KeskusteluDao(Database database) {
+        this.database = database;
+    }
+
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
@@ -30,7 +32,8 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
         connection.close();
 
 
-        return keskustelu;    }
+        return keskustelu;
+    }
 
     @Override
     public List<Keskustelu> findAll() throws SQLException {
@@ -55,7 +58,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
         return keskustelut;
     }
 
-    public List<Keskustelu> findAllInAihe(int key) throws SQLException{
+    public List<Keskustelu> findAllInAihe(int key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id=?");
         stmt.setObject(1, key);
@@ -81,6 +84,9 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
     @Override
     public void delete(Integer key) throws SQLException {
         Connection connection = database.getConnection();
+        ViestiDao viestiDao = new ViestiDao(database);
+
+        viestiDao.deleteFrom(key);
 
         PreparedStatement stmnt = connection.prepareStatement("DELETE FROM Keskustelut WHERE id = ?");
         stmnt.setObject(1, key);
@@ -89,23 +95,28 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer>{
         connection.close();
     }
 
-    public void deleteFrom(Integer aihe) throws  SQLException{
+    public void deleteFrom(Integer aihe) throws SQLException {
         ViestiDao viestiDao = new ViestiDao(database);
         Connection connection = database.getConnection();
 
         PreparedStatement stmnt = connection.prepareStatement("DELETE FROM Keskustelut WHERE aihe_id = ?");
         stmnt.setObject(1, aihe);
+        PreparedStatement stmnt2 = connection.prepareStatement("SELECT id FROM Keskustelut WHERE aihe_id = ?");
+        stmnt2.setObject(1, aihe);
+        ResultSet rs = stmnt2.executeQuery();
+        ArrayList<Integer> arr = new ArrayList<>();
+        while (rs.next()) {
+            arr.add(rs.getInt("id"));
+        }
+        stmnt2.close();
+        for (int i : arr) {
+            viestiDao.deleteFrom(i);
+        }
         stmnt.execute();
         stmnt.close();
         connection.close();
-        PreparedStatement stmnt2 = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id = ?");
-        stmnt2.setObject(1, aihe);
-        ResultSet rs = stmnt2.executeQuery();
-        while(rs.next()) {
-            viestiDao.deleteFrom(rs.getInt("id"));
-        }
-        stmnt2.close();
-        connection.close();
+
+
     }
 
 
