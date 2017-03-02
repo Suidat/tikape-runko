@@ -75,12 +75,13 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();
+
         while (rs.next()) {
             int id = rs.getInt("id");
             String lahettaja = rs.getString("sender");
             String sisalto = rs.getString("message");
             String aika = rs.getString("time");
-            int keskustelu = rs.getInt("keskusteluId");
+            int keskustelu = rs.getInt("keskustelu_Id");
             viestit.add(new Viesti(id, sisalto, lahettaja, aika, keskustelu));
         }
 
@@ -112,17 +113,6 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return numero;
     }
 
-    public void lisaaViesti(Viesti viesti, int keskustelu) throws SQLException{
-
-
-
-        Connection connection = database.getConnection();
-
-        PreparedStatement stmnt = connection.prepareStatement(
-                "INSERT INTO Viestit (sender, message, time,  Keskustelu_id) VALUES (?,?,?,?)");
-
-
-    }
 
     @Override
     public void delete(Integer key) throws SQLException {
@@ -150,7 +140,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Viestit (sender, message, time, keskustelu_id) VALUES (?,?,?,?)");
         stmnt.setObject(1, lisattava.getLahettaja());
         stmnt.setObject(2, lisattava.getTeksti());
-        stmnt.setObject(3, lisattava.getAika);
+        stmnt.setObject(3, lisattava.getAika());
         stmnt.setObject(4, lisattava.getKeskusteluId());
         stmnt.execute();
         stmnt.close();

@@ -23,6 +23,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (!hasOne) {
+            return null;
+        }
         Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
         Keskustelu keskustelu = new Keskustelu(id, nimi);
@@ -30,7 +34,6 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         rs.close();
         stmt.close();
         connection.close();
-
 
         return keskustelu;
     }
@@ -43,12 +46,11 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();
+
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
-
-
-            keskustelut.add(new Keskustelu(id, nimi));
+            keskustelut.add(new Keskustelu(nimi, id));
         }
 
         rs.close();
@@ -71,7 +73,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             String nimi = rs.getString("nimi");
 
 
-            keskustelut.add(new Keskustelu(id, nimi));
+            keskustelut.add(new Keskustelu(nimi, id));
         }
 
         rs.close();
