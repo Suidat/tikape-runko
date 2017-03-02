@@ -150,7 +150,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Viestit (sender, message, time, keskustelu_id) VALUES (?,?,?,?)");
         stmnt.setObject(1, lisattava.getLahettaja());
         stmnt.setObject(2, lisattava.getTeksti());
-        stmnt.setObject(3, date.toString());
+        stmnt.setObject(3, lisattava.getAika);
         stmnt.setObject(4, lisattava.getKeskusteluId());
         stmnt.execute();
         stmnt.close();
