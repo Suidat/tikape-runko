@@ -5,52 +5,56 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Viesti {
-    private String timeStamp;
-    private String message;
-    private String sender;
+    private String aika;
+    private String teksti;
+    private String lahettaja;
     private int id;
     private int keskusteluId;
 
-    public Viesti(int id, String lahettaja, String viesti, String aika, int keskustelu){
+    public Viesti(int id, String sender, String teksti, String aika, int keskustelu){
         this.id = id;
-        this.message = viesti;
-        this.sender = lahettaja;
-        this.timeStamp = aika;
+        this.teksti = teksti;
+        this.lahettaja = sender;
+        this.aika = aika;
         this.keskusteluId = keskustelu;
     }
 
 
 
-    public Viesti( String lahettaja, String viesti, int keskusteluId){
+    public Viesti( String sender, String teksti, int keskusteluId){
         DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
         Date date = new Date();
-        this.message = viesti;
-        this.sender = lahettaja;
-        this.timeStamp = df.format(date);
+        this.teksti = teksti;
+        this.lahettaja = sender;
+        this.aika = df.format(date);
         this.keskusteluId = keskusteluId;
     }
 
     public Viesti(){
         this.id = 0;
-        this.message = null;
-        this.sender = null;
-        this.timeStamp = null;
+        this.teksti = null;
+        this.lahettaja = null;
+        this.aika = null;
     }
 
-    public void setSender(String item){this.sender=item;}
+    public void setLahettaja(String item){this.lahettaja=item;}
 
-    public void setMessage(String item){this.message=item;}
+    public void setTeksti(String item){this.teksti=item;}
 
     public void setId(int item){this.id=item;}
 
-    public void setDate(String item){this.timeStamp=item;}
+    public void setAika(String item){this.aika=item;}
 
-    public String getSender(){return this.sender;}
+    public void setKeskusteluId(int item){this.keskusteluId = item;}
 
-    public String getMessage(){return this.message;}
+    public String getLahettaja(){return this.lahettaja;}
+
+    public String getTeksti(){return this.teksti;}
 
     public int getId(){return this.id;}
 
-    public String getDate(){ return this.timeStamp;}
+    public String getAika(){ return this.aika;}
+
+    public int getKeskusteluId(){return this.keskusteluId;}
 
 }

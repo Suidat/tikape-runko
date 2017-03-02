@@ -24,8 +24,6 @@ public class Main {
         Database database = new Database("jdbc:sqlite:keskustelupalsta.db");
         database.init();
 
-        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
-        Date date = new Date();
         ViestiDao viestiDao = new ViestiDao(database);
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         AiheDao aiheDao = new AiheDao(database);
@@ -56,22 +54,22 @@ public class Main {
 
         post("/uusi/aihe/", (req, res) -> {
             aiheDao.add(new Aihe(req.queryParams("nimi")));
-            res.redirect("/ ");
+            res.redirect("/");
             return "ok";
         });
 
         post("/uusi/keskustelu/:id", (req, res) -> {
             keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params(":id")), req.queryParams("nimi")));
-            res.redirect("/"+req.params(":id"));
+            res.redirect("/" + req.params(":id"));
             return "ok";
         });
 
 
-        post("/uusi/viesti/:id", (Request req, Response res) ->{
+        post("/uusi/viesti/:id", (Request req, Response res) -> {
             int id = Integer.parseInt(req.params(":id"));
             viestiDao.add(new Viesti(req.queryParams("lähettäjä"),
                     req.queryParams("viesti"), id));
-            res.redirect("/keskustelut/"+id);
+            res.redirect("/keskustelut/" + id);
             return "ok";
         });
 
@@ -82,8 +80,18 @@ public class Main {
         });
 
         get("/poista/keskustelu/:id", (req, res) -> {
-            keskusteluDao.delete(Integer.parseInt(req.params(":id")));
-            res.redirect("/");
+            int id = Integer.parseInt(req.params(":id"));
+            int tanne = keskusteluDao.findOne(id).getAiheId();
+            keskusteluDao.delete(id);
+            res.redirect("/" + tanne);
+            return "ok";
+        });
+
+        get("/poista/viesti/:id", (req, res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            int tanne = viestiDao.findOne(id).getKeskusteluId();
+            viestiDao.delete(id);
+            res.redirect("/keskustelut" + tanne);
             return "ok";
         });
     }
