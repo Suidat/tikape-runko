@@ -144,6 +144,13 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
     @Override
     public void add(Keskustelu lisattava) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Keskustelut (nimi, aihe_id) VALUES (?,?)");
+        stmnt.setObject(1,lisattava.getNimi());
+        stmnt.setObject(2,lisattava.getAiheId());
+        stmnt.execute();
+        stmnt.close();
+        connection.close();
 
     }
 

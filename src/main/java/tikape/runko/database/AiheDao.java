@@ -11,7 +11,9 @@ import java.util.List;
 public class AiheDao implements Dao<Aihe, Integer> {
     private Database database;
 
-    public AiheDao(Database data){this.database = data;}
+    public AiheDao(Database data) {
+        this.database = data;
+    }
 
     @Override
     public Aihe findOne(Integer key) throws SQLException {
@@ -22,11 +24,11 @@ public class AiheDao implements Dao<Aihe, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
-        if(!hasOne) return null;
+        if (!hasOne) return null;
 
-            Integer id = rs.getInt("id");
-                String nimi = rs.getString("aihe");
-            Aihe aihe = new Aihe(id, nimi);
+        Integer id = rs.getInt("id");
+        String nimi = rs.getString("aihe");
+        Aihe aihe = new Aihe(id, nimi);
 
         rs.close();
         stmt.close();
@@ -79,7 +81,7 @@ public class AiheDao implements Dao<Aihe, Integer> {
         connection.close();
     }
 
-    public int viestienMaara(int id) throws SQLException{
+    public int viestienMaara(int id) throws SQLException {
         Connection connection = database.getConnection();
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
 
@@ -87,21 +89,20 @@ public class AiheDao implements Dao<Aihe, Integer> {
         stmnt.setObject(1, id);
         ResultSet rs = stmnt.executeQuery();
         ArrayList<Integer> list = new ArrayList();
-        while(rs.next()){
+        while (rs.next()) {
             list.add(rs.getInt("id"));
         }
         rs.close();
         stmnt.close();
         connection.close();
         int palautus = 0;
-        for(int i : list) {
+        for (int i : list) {
             palautus += keskusteluDao.viestienMaara(i);
         }
 
         return palautus;
 
     }
-
 
 
 }

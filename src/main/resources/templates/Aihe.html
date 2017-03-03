@@ -11,7 +11,7 @@
         <ul>
             <p th:each="keskustelu : ${keskustelulista}">
                 <a th:href="${'/keskustelut/'+keskustelu.id}">
-                    <span th:text="${keskustelu.nimi}">jotain?</span></a> <span th:text="${määrä}">  1</span>
+                    <span th:text="${keskustelu.nimi}">jotain?</span></a> <span th:text="${keskustelu.maara}">  1</span>
             </p>
 
         </ul>

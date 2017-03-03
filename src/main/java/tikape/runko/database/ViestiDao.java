@@ -98,10 +98,26 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(id) AS määrä FROM Viestit" +
                 " WHERE keskustelu_id = ? GROUP BY Keskustelu_id ORDER BY Keskustelu_id");
         stmt.setObject(1, key);
+        ResultSet rs = stmt.executeQuery();
+        int numero =rs.getInt("määrä");
+        rs.close();
+        stmt.close();
+        connection.close();
+        return numero;
+    }
+
+    public List<Integer> listaaViestienMaara(int key) throws SQLException{
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(id) AS määrä FROM Viestit" +
+                " WHERE keskustelu_id = ? GROUP BY Keskustelu_id ORDER BY Keskustelu_id");
+        stmt.setObject(1, key);
 
 
         ResultSet rs = stmt.executeQuery();
-        int numero =rs.getInt("määrä");
+        List<Integer> numero = new ArrayList<>();
+        while (rs.next()) {
+            numero.add(rs.getInt("määrä"));
+        }
 
         rs.close();
         stmt.close();
@@ -109,7 +125,6 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
         return numero;
     }
-
 
     @Override
     public void delete(Integer key) throws SQLException {

@@ -7,6 +7,7 @@ public class Keskustelu {
     private String nimi;
     private String aika;
     private int aiheId;
+    private int maara;
 
     public Keskustelu(int id, String nimi){
         this.aiheId = id;
@@ -50,4 +51,8 @@ public class Keskustelu {
     public void setNimi(String nimi) {
         this.nimi = nimi;
     }
+
+    public void setMaara(int maara){this.maara = maara;}
+
+    public int getMaara(){return this.maara;}
 }

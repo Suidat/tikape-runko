@@ -24,22 +24,25 @@ public class Main {
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         AiheDao aiheDao = new AiheDao(database);
 
+        //Aiheiden lista.
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("aihelista", aiheDao.findAll());
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
+        //Keskusteluiden lista.
         get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             int id = Integer.parseInt(req.params("id"));
 
             map.put("title", aiheDao.findOne(id));
             map.put("keskustelulista", keskusteluDao.findAllInAihe(id));
-            map.put("määrä", viestiDao.viestienMaara(id));
+            map.put("määrä", viestiDao.listaaViestienMaara(id));
             return new ModelAndView(map, "Aihe");
         }, new ThymeleafTemplateEngine());
 
+        //Keskustelun sisältö.
         get("/keskustelut/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             int id = Integer.parseInt(req.params("id"));
@@ -48,20 +51,23 @@ public class Main {
             return new ModelAndView(map, "Keskustelu");
         }, new ThymeleafTemplateEngine());
 
-        post("/uusi/aihe/", (req, res) -> {
-            aiheDao.add(new Aihe(req.queryParams("nimi")));
+
+        //Uuden aiheen lisääminen.
+        post("/", (req, res) -> {
+            aiheDao.add(new Aihe(req.queryParams("aihe")));
             res.redirect("/");
             return "ok";
         });
 
-        post("/uusi/keskustelu/:id", (req, res) -> {
-            keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params(":id")), req.queryParams("nimi")));
+        //Uuden keskustelun lisääminen.
+        post("/:id", (req, res) -> {
+            keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params(":id")), req.queryParams("keskustelu")));
             res.redirect("/" + req.params(":id"));
             return "ok";
         });
 
-
-        post("/uusi/viesti/:id", (Request req, Response res) -> {
+        //Uuden viestin lisääminen.
+        post("/keskustelut/:id", (Request req, Response res) -> {
             int id = Integer.parseInt(req.params(":id"));
             viestiDao.add(new Viesti(req.queryParams("lähettäjä"),
                     req.queryParams("viesti"), id));
@@ -69,12 +75,14 @@ public class Main {
             return "ok";
         });
 
+        //Aiheen poistaminen.
         get("/poista/aihe/:id", (req, res) -> {
             aiheDao.delete(Integer.parseInt(req.params(":id")));
             res.redirect("/");
             return "ok";
         });
 
+        //Keskustelun poistaminen,
         get("/poista/keskustelu/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
             int tanne = keskusteluDao.findOne(id).getAiheId();
@@ -83,6 +91,7 @@ public class Main {
             return "ok";
         });
 
+        //Viestin poistaminen.
         get("/poista/viesti/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
             int tanne = viestiDao.findOne(id).getKeskusteluId();
