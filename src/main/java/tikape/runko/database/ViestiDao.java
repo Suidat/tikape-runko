@@ -93,7 +93,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
     }
 
-    public List<Integer> viestienMaara(int key) throws SQLException{
+    public int viestienMaara(int key) throws SQLException{
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(id) AS määrä FROM Viestit" +
                 " WHERE keskustelu_id = ? GROUP BY Keskustelu_id ORDER BY Keskustelu_id");
@@ -101,10 +101,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
 
         ResultSet rs = stmt.executeQuery();
-        List<Integer> numero = new ArrayList<>();
-        while (rs.next()) {
-            numero.add(rs.getInt("määrä"));
-        }
+        int numero =rs.getInt("määrä");
 
         rs.close();
         stmt.close();

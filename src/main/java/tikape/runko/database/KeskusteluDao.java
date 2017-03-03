@@ -121,6 +121,26 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
     }
 
+    public int viestienMaara(int id) throws SQLException{
+        Connection connection = database.getConnection();
+        ViestiDao viestiDao = new ViestiDao(database);
+        PreparedStatement stmnt = connection.prepareStatement("SELECT id FROM Keskustelut WHERE aihe_id = ?");
+        stmnt.setObject(1, id);
+        ResultSet rs = stmnt.executeQuery();
+        ArrayList<Integer> list = new ArrayList();
+        while(rs.next()){
+            list.add(rs.getInt("id"));
+        }
+        rs.close();
+        stmnt.close();
+        connection.close();
+        int palautus = 0;
+        for(int i : list) {
+            palautus += viestiDao.viestienMaara(i);
+        }
+
+        return palautus;
+    }
 
     @Override
     public void add(Keskustelu lisattava) throws SQLException {

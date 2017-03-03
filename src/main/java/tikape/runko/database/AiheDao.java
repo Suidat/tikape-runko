@@ -79,6 +79,29 @@ public class AiheDao implements Dao<Aihe, Integer> {
         connection.close();
     }
 
+    public int viestienMaara(int id) throws SQLException{
+        Connection connection = database.getConnection();
+        KeskusteluDao keskusteluDao = new KeskusteluDao(database);
+
+        PreparedStatement stmnt = connection.prepareStatement("SELECT id FROM Aihe WHERE aihe_id = ?");
+        stmnt.setObject(1, id);
+        ResultSet rs = stmnt.executeQuery();
+        ArrayList<Integer> list = new ArrayList();
+        while(rs.next()){
+            list.add(rs.getInt("id"));
+        }
+        rs.close();
+        stmnt.close();
+        connection.close();
+        int palautus = 0;
+        for(int i : list) {
+            palautus += keskusteluDao.viestienMaara(i);
+        }
+
+        return palautus;
+
+    }
+
 
 
 }

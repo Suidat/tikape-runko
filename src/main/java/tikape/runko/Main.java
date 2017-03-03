@@ -1,10 +1,6 @@
 package tikape.runko;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import spark.ModelAndView;
 
@@ -40,7 +36,7 @@ public class Main {
 
             map.put("title", aiheDao.findOne(id));
             map.put("keskustelulista", keskusteluDao.findAllInAihe(id));
-            map.put("määrä", viestiDao.viestienMaara(id).toString());
+            map.put("määrä", viestiDao.viestienMaara(id));
             return new ModelAndView(map, "Aihe");
         }, new ThymeleafTemplateEngine());
 
