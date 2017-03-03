@@ -15,6 +15,14 @@
                     <span th:text="${viesti.lahettaja}">any</span>
                     <span th:text="${viesti.aika}">time</span>
             </p>
+    
+    <form method="POST">
+        <span> Viesti: </span>
+            <input type="text" name="viesti"/>
+        <span> Lähettäjä: </span>
+            <input type="text" name="lähettäjä"/>
+            <input type="submit" value="lähetä"/>
+        </form>
 
 </body>
 </html>
