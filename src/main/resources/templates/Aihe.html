@@ -2,21 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <style>
+        th, td{
+            padding: 5px;
+        }
+    </style>
+
     <title><span th:text="${title}">jotain</span></title>
     <meta charset="UTF-8" />
 </head>
 
 <body>
-        <pre>       Aihe     Viestien määrä       Viimeisin viesti </pre>
-        <ul>
-            <p th:each="keskustelu : ${keskustelulista}">
+        <table>
+            <th align="center">Aihe</th>
+            <th align="center">Viestien määrä</th>
+            <th align="center">Viimeisin Viesti</th>
+            <tr th:each="keskustelu : ${keskustelulista}">
                 <a th:href="${'/keskustelut/'+keskustelu.id}">
-                    <span th:text="${keskustelu.nimi}">jotain?</span></a> <span th:text="${keskustelu.maara}">  1</span>
-            </p>
+                    <td align="center" th:text="${keskustelu.nimi}">jotain?</td></a>
+                <td align="center" th:text="${keskustelu.maara}">1</td>
+                <td>01:01:01 01/01/0001</td>
 
-        </ul>
-    
-    <form method="POST">
+            </tr>
+
+        </table>
+        <pre>
+
+
+        </pre>
+        <form method="POST">
         <span> Lisää Keskustelu: </span>
             <input type="text" name="keskustelu"/>
             <input type="submit" value="lisää!"/>
