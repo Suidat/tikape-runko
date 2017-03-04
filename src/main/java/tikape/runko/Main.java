@@ -38,7 +38,7 @@ public class Main {
 
             map.put("title", aiheDao.findOne(id));
             map.put("keskustelulista", keskusteluDao.findAllInAihe(id));
-            map.put("määrä", viestiDao.listaaViestienMaara(id));
+            map.put("määrä", keskusteluDao.findAll());
             return new ModelAndView(map, "Aihe");
         }, new ThymeleafTemplateEngine());
 

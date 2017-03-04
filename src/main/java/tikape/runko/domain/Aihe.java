@@ -12,6 +12,7 @@ public class Aihe {
         this.id = id;
         this.nimi = nimi;
     }
+
     public int getId(){return this.id;}
     public String getNimi(){return this.nimi;}
 }

@@ -32,6 +32,12 @@ public class Keskustelu {
         this.aiheId = aiheId;
     }
 
+    public Keskustelu(String nimi, int id, int maara) {
+        this.id = id;
+        this.nimi = nimi;
+        this.maara = maara;
+    }
+
     public int getId() {
         return this.id;
     }

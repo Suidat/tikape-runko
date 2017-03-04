@@ -43,18 +43,23 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut");
+        PreparedStatement viestienMaara = connection.prepareStatement("SELECT COUNT(id) FROM Viestit GROUP BY Keskustelu_id ORDER BY Keskustelu_id");
 
         ResultSet rs = stmt.executeQuery();
+        ResultSet juttu = viestienMaara.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();
 
-        while (rs.next()) {
+        while (rs.next() && juttu.next()) {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
-            keskustelut.add(new Keskustelu(nimi, id));
+            Integer maara = juttu.getInt("määrä");
+            keskustelut.add(new Keskustelu(nimi, id, maara));
         }
 
         rs.close();
         stmt.close();
+        juttu.close();
+        viestienMaara.close();
         connection.close();
 
         return keskustelut;
