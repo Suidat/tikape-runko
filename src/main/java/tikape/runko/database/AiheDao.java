@@ -1,10 +1,8 @@
 package tikape.runko.database;
 
 import tikape.runko.domain.Aihe;
-import tikape.runko.domain.Keskustelu;
 
 import java.sql.*;
-import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +48,14 @@ public class AiheDao implements Dao<Aihe, Integer> {
             String nimi = rs.getString("Aihe");
             aiheet.add(new Aihe(id, nimi));
         }
-
         rs.close();
         stmt.close();
         connection.close();
-
+        KeskusteluDao keskusteluDao = new KeskusteluDao(database);
+        for(Aihe a : aiheet){
+            a.setMaara(keskusteluDao.viestienMaara(a.getId()));
+            a.setAika(keskusteluDao.viimeisinViesti(a.getId()));
+        }
         return aiheet;
     }
 
@@ -79,29 +80,6 @@ public class AiheDao implements Dao<Aihe, Integer> {
         stmnt.execute();
         stmnt.close();
         connection.close();
-    }
-
-    public int viestienMaara(int id) throws SQLException {
-        Connection connection = database.getConnection();
-        KeskusteluDao keskusteluDao = new KeskusteluDao(database);
-
-        PreparedStatement stmnt = connection.prepareStatement("SELECT id FROM Aihe WHERE aihe_id = ?");
-        stmnt.setObject(1, id);
-        ResultSet rs = stmnt.executeQuery();
-        ArrayList<Integer> list = new ArrayList();
-        while (rs.next()) {
-            list.add(rs.getInt("id"));
-        }
-        rs.close();
-        stmnt.close();
-        connection.close();
-        int palautus = 0;
-        for (int i : list) {
-            palautus += keskusteluDao.viestienMaara(i);
-        }
-
-        return palautus;
-
     }
 
 

@@ -3,14 +3,12 @@ package tikape.runko.database;
 import tikape.runko.domain.Keskustelu;
 
 import java.sql.*;
-import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     private Database database;
-    DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
-    Date date;
 
     public KeskusteluDao(Database database) {
         this.database = database;
@@ -65,27 +63,16 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         return keskustelut;
     }
 
-    public List<Keskustelu> findAllInAihe(int key) throws SQLException {
+    @Override
+    public void add(Keskustelu lisattava) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id=?");
-        stmt.setObject(1, key);
-
-
-        ResultSet rs = stmt.executeQuery();
-        List<Keskustelu> keskustelut = new ArrayList<>();
-        while (rs.next()) {
-            Integer id = rs.getInt("id");
-            String nimi = rs.getString("nimi");
-
-
-            keskustelut.add(new Keskustelu(nimi, id));
-        }
-
-        rs.close();
-        stmt.close();
+        PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Keskustelut (nimi, aihe_id) VALUES (?,?)");
+        stmnt.setObject(1, lisattava.getNimi());
+        stmnt.setObject(2, lisattava.getAiheId());
+        stmnt.execute();
+        stmnt.close();
         connection.close();
 
-        return keskustelut;
     }
 
     @Override
@@ -100,6 +87,32 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         stmnt.execute();
         stmnt.close();
         connection.close();
+    }
+
+    public List<Keskustelu> findAllInAihe(int key) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id = ?");
+        stmt.setObject(1, key);
+        ResultSet rs = stmt.executeQuery();
+        List<Keskustelu> keskustelut = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String nimi = rs.getString("nimi");
+
+            keskustelut.add(new Keskustelu(nimi, id));
+        }
+
+        rs.close();
+        stmt.close();
+        ViestiDao viestiDao = new ViestiDao(database);
+
+        for (Keskustelu k : keskustelut) {
+            k.setMaara(viestiDao.viestienMaara(k.getId()));
+            k.setAika(viestiDao.viimeisinViesti(k.getId()));
+        }
+        connection.close();
+
+        return keskustelut;
     }
 
     public void deleteFrom(Integer aihe) throws SQLException {
@@ -126,38 +139,47 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
     }
 
-    public int viestienMaara(int id) throws SQLException{
+    public int viestienMaara(int id) throws SQLException {
         Connection connection = database.getConnection();
         ViestiDao viestiDao = new ViestiDao(database);
         PreparedStatement stmnt = connection.prepareStatement("SELECT id FROM Keskustelut WHERE aihe_id = ?");
         stmnt.setObject(1, id);
         ResultSet rs = stmnt.executeQuery();
         ArrayList<Integer> list = new ArrayList();
-        while(rs.next()){
+        while (rs.next()) {
             list.add(rs.getInt("id"));
         }
         rs.close();
         stmnt.close();
         connection.close();
         int palautus = 0;
-        for(int i : list) {
+        for (int i : list) {
             palautus += viestiDao.viestienMaara(i);
         }
 
         return palautus;
     }
 
-    @Override
-    public void add(Keskustelu lisattava) throws SQLException {
+    public String viimeisinViesti(int key) throws SQLException{
         Connection connection = database.getConnection();
-        PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Keskustelut (nimi, aihe_id) VALUES (?,?)");
-        stmnt.setObject(1,lisattava.getNimi());
-        stmnt.setObject(2,lisattava.getAiheId());
-        stmnt.execute();
+        TreeSet<String> set = new TreeSet<>();
+        PreparedStatement stmnt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id = ?");
+        stmnt.setObject(1, key);
+        ResultSet rs = stmnt.executeQuery();
+        ArrayList<Integer> list = new ArrayList<>();
+        while(rs.next()){
+            list.add(rs.getInt("id"));
+        }
+        rs.close();
         stmnt.close();
         connection.close();
-
+        ViestiDao viestiDao = new ViestiDao(database);
+        for(int i : list){
+            set.add(viestiDao.viimeisinViesti(i));
+        }
+        return set.last();
     }
+
 
 
 }

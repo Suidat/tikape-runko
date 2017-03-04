@@ -2,6 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
+        <style>
+            table{
+                table-layout: fixed;
+                border-collapse: collapse;
+            }
+            td, th{
+                word-wrap: break-word;
+                padding: 5px;
+                width: 200px;
+            }
+        </style>
         <title>Mielipide Upgrade</title>
         <meta charset="utf-8" />
     </head>
@@ -9,12 +20,20 @@
     <body>
         <h1>Tervetuloa!</h1>
 
-        <ul>
-            <p th:each="aihe : ${aihelista}">
-                <span th:text="${aihe.nimi}">jotain?</span> <a th:href="${'/'+aihe.id}">linkki</a>
-            </p>
-        </ul>
-        
+        <table>
+            <th align="center">Aihe</th>
+            <th align="center">Viestien määrä</th>
+            <th align="center">Viimeisin Viesti</th>
+            <tr th:each="aihe : ${aihelista}">
+                <td align="center"> <a th:href="${'/'+aihe.id}"><span th:text="${aihe.nimi}">Linkki</span></a></td>
+                <td align="center" th:text="${aihe.maara}">1</td>
+                <td align="center" th:text="${aihe.aika}">01:01:01 01/01/0001</td>
+            </tr>
+        </table>
+        <pre>
+
+
+        </pre>
         <form method="POST">
         <span> Lisää Aihe: </span>
             <input type="text" name="aihe"/>

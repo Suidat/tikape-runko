@@ -1,40 +1,49 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:each="aihe : ${title}">
     <style>
-        th, td{
+        table {
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        td, th {
+            word-wrap: break-word;
             padding: 5px;
+            width: 200px;
         }
     </style>
-
-    <title><span th:text="${title}">jotain</span></title>
-    <meta charset="UTF-8" />
+    <title th:text="${aihe.nimi}"><span >jotain</span></title>
+    <meta charset="UTF-8"/>
 </head>
 
 <body>
-        <table>
-            <th align="center">Aihe</th>
-            <th align="center">Viestien määrä</th>
-            <th align="center">Viimeisin Viesti</th>
-            <tr th:each="keskustelu : ${keskustelulista}">
-                <a th:href="${'/keskustelut/'+keskustelu.id}">
-                    <td align="center" th:text="${keskustelu.nimi}">jotain?</td></a>
-                <td align="center" th:text="${keskustelu.maara}">1</td>
-                <td>01:01:01 01/01/0001</td>
+<header th:each="aihe : ${title}">
+    <h1 th:text="${aihe.nimi}">Aihe</h1>
+</header>
 
-            </tr>
+<table>
 
-        </table>
-        <pre>
+    <th align="center">Aihe</th>
+    <th align="center">Viestien määrä</th>
+    <th align="center">Viimeisin Viesti</th>
+    <tr th:each="keskustelu : ${keskustelulista}">
+        <td align="center"><a th:href="${'/keskustelut/'+keskustelu.id}"><span
+                th:text="${keskustelu.nimi}">Linkki</span></a></td>
+        <td align="center" th:text="${keskustelu.maara}">1</td>
+        <td align="center" th:text="${keskustelu.aika}">01:01:01 01/01/0001</td>
+    </tr>
+</table>
+<pre>
 
 
         </pre>
-        <form method="POST">
-        <span> Lisää Keskustelu: </span>
-            <input type="text" name="keskustelu"/>
-            <input type="submit" value="lisää!"/>
-        </form>
+<form method="POST">
+    <span> Lisää Keskustelu: </span>
+    <input type="text" name="keskustelu"/>
+    <input type="submit" value="lisää!"/>
+</form>
 
 </body>
 </html>
