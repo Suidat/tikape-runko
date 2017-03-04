@@ -96,7 +96,7 @@ public class Main {
             int id = Integer.parseInt(req.params(":id"));
             int tanne = viestiDao.findOne(id).getKeskusteluId();
             viestiDao.delete(id);
-            res.redirect("/keskustelut" + tanne);
+            res.redirect("/keskustelut/" + tanne);
             return "ok";
         });
     }
