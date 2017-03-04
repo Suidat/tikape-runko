@@ -26,7 +26,7 @@
             <th align="center">Viimeisin Viesti</th>
             <tr th:each="aihe : ${aihelista}">
                 <td align="center"> <a th:href="${'/'+aihe.id}"><span th:text="${aihe.nimi}">Linkki</span></a></td>
-                <td align="center">1</td>
+                <td align="center" th:text="${aihe.maara}">1</td>
                 <td align="center">01:01:01 01/01/0001</td>
             </tr>
         </table>

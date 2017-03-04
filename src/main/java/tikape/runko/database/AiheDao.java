@@ -1,10 +1,8 @@
 package tikape.runko.database;
 
 import tikape.runko.domain.Aihe;
-import tikape.runko.domain.Keskustelu;
 
 import java.sql.*;
-import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +48,13 @@ public class AiheDao implements Dao<Aihe, Integer> {
             String nimi = rs.getString("Aihe");
             aiheet.add(new Aihe(id, nimi));
         }
-
         rs.close();
         stmt.close();
         connection.close();
+        KeskusteluDao keskusteluDao = new KeskusteluDao(database);
+        for(Aihe a : aiheet){
+            a.setMaara(keskusteluDao.viestienMaara(a.getId()));
+        }
 
         return aiheet;
     }

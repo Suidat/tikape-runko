@@ -3,40 +3,42 @@
 
 <head>
     <style>
-        table{
+        table {
             table-layout: fixed;
             border-collapse: collapse;
         }
-        td, th{
+
+        td, th {
             word-wrap: break-word;
             padding: 5px;
             width: 200px;
         }
     </style>
     <title><span th:text="${title}">jotain</span></title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
 </head>
 
 <body>
-        <table>
-            <th align="center">Aihe</th>
-            <th align="center">Viestien määrä</th>
-            <th align="center">Viimeisin Viesti</th>
-            <tr th:each="keskustelu : ${keskustelulista}">
-                <td align="center" > <a th:href="${'/keskustelut/'+keskustelu.id}"><span th:text="${keskustelu.nimi}">Linkki</span></a></td>
-                <td align="center" th:text="${keskustelu.maara}">1</td>
-                <td align="center">01:01:01 01/01/0001</td>
-            </tr>
-        </table>
-        <pre>
+<table>
+    <th align="center">Aihe</th>
+    <th align="center">Viestien määrä</th>
+    <th align="center">Viimeisin Viesti</th>
+    <tr th:each="keskustelu : ${keskustelulista}">
+        <td align="center"><a th:href="${'/keskustelut/'+keskustelu.id}"><span
+                th:text="${keskustelu.nimi}">Linkki</span></a></td>
+        <td align="center" th:text="${keskustelu.maara}">1</td>
+        <td align="center">01:01:01 01/01/0001</td>
+    </tr>
+</table>
+<pre>
 
 
         </pre>
-        <form method="POST">
-        <span> Lisää Keskustelu: </span>
-            <input type="text" name="keskustelu"/>
-            <input type="submit" value="lisää!"/>
-        </form>
+<form method="POST">
+    <span> Lisää Keskustelu: </span>
+    <input type="text" name="keskustelu"/>
+    <input type="submit" value="lisää!"/>
+</form>
 
 </body>
 </html>

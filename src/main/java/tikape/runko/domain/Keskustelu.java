@@ -42,7 +42,7 @@ public class Keskustelu {
 
     public int getAiheId() {return this.aiheId;}
 
-    public void setAikaId(int tunnus){this.aiheId = tunnus;}
+    public void setAiheId(int tunnus){this.aiheId = tunnus;}
 
     public void setId(int tunnus) {
         this.id = tunnus;
@@ -55,4 +55,8 @@ public class Keskustelu {
     public void setMaara(int maara){this.maara = maara;}
 
     public int getMaara(){return this.maara;}
+
+    public void setAika(String aika){this.aika = aika;}
+
+    public String getAika(){return this.aika;}
 }
