@@ -153,6 +153,24 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return numero;
     }
 
+    public String viimeisinViesti(int key) throws SQLException{
+        Connection connection = database.getConnection();
+        TreeSet<String> set = new TreeSet<>();
+        PreparedStatement stmnt = connection.prepareStatement("SELECT * FROM Viestit WHERE Keskustelu_id = ?");
+        stmnt.setObject(1, key);
+        ResultSet rs = stmnt.executeQuery();
+        while(rs.next()){
+            set.add(rs.getString("time"));
+        }
+
+        rs.close();
+        stmnt.close();
+        connection.close();
+        if (set.isEmpty())
+            return null;
+        return set.last();
+    }
+
     public void deleteFrom(Integer keskustelu) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmnt = connection.prepareStatement("DELETE FROM Viestit WHERE keskustelu_id = ?");

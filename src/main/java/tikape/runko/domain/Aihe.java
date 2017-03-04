@@ -25,5 +25,7 @@ public class Aihe {
     public String getNimi(){return this.nimi;}
     public int getMaara(){return this.maara;}
     public void setMaara(int maara){this.maara=maara;}
+    public void setAika(String aika){this.aika=aika;}
+    public String getAika(){return this.aika;}
 }
     

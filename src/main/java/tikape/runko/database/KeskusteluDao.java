@@ -5,6 +5,7 @@ import tikape.runko.domain.Keskustelu;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     private Database database;
@@ -102,6 +103,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         for (Keskustelu k : keskustelut) {
             k.setMaara(viestiDao.viestienMaara(k.getId()));
+            k.setAika(viestiDao.viimeisinViesti(k.getId()));
         }
         connection.close();
 
@@ -152,6 +154,27 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         return palautus;
     }
+
+    public String viimeisinViesti(int key) throws SQLException{
+        Connection connection = database.getConnection();
+        TreeSet<String> set = new TreeSet<>();
+        PreparedStatement stmnt = connection.prepareStatement("SELECT * FROM Keskustelut WHERE aihe_id = ?");
+        stmnt.setObject(1, key);
+        ResultSet rs = stmnt.executeQuery();
+        ArrayList<Integer> list = new ArrayList<>();
+        while(rs.next()){
+            list.add(rs.getInt("id"));
+        }
+        rs.close();
+        stmnt.close();
+        connection.close();
+        ViestiDao viestiDao = new ViestiDao(database);
+        for(int i : list){
+            set.add(viestiDao.viimeisinViesti(i));
+        }
+        return set.last();
+    }
+
 
 
 }

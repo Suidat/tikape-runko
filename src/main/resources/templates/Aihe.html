@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:each="aihe : ${title}">
     <style>
         table {
             table-layout: fixed;
@@ -14,12 +14,17 @@
             width: 200px;
         }
     </style>
-    <title><span th:text="${title}">jotain</span></title>
+    <title th:text="${aihe.nimi}"><span >jotain</span></title>
     <meta charset="UTF-8"/>
 </head>
 
 <body>
+<header th:each="aihe : ${title}">
+    <h1 th:text="${aihe.nimi}">Aihe</h1>
+</header>
+
 <table>
+
     <th align="center">Aihe</th>
     <th align="center">Viestien määrä</th>
     <th align="center">Viimeisin Viesti</th>
@@ -27,7 +32,7 @@
         <td align="center"><a th:href="${'/keskustelut/'+keskustelu.id}"><span
                 th:text="${keskustelu.nimi}">Linkki</span></a></td>
         <td align="center" th:text="${keskustelu.maara}">1</td>
-        <td align="center">01:01:01 01/01/0001</td>
+        <td align="center" th:text="${keskustelu.aika}">01:01:01 01/01/0001</td>
     </tr>
 </table>
 <pre>
