@@ -54,6 +54,10 @@ public class Main {
 
         //Uuden aiheen lisääminen.
         post("/", (req, res) -> {
+            if(req.queryParams("aihe").equals("")){
+                res.redirect("/");
+                return "ok";
+            }
             aiheDao.add(new Aihe(req.queryParams("aihe")));
             res.redirect("/");
             return "ok";
@@ -61,6 +65,10 @@ public class Main {
 
         //Uuden keskustelun lisääminen.
         post("/:id", (req, res) -> {
+            if(req.queryParams("keskustelu").equals("")){
+                res.redirect("/" + req.params(":id"));
+                return "ok";
+            }
             keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params(":id")), req.queryParams("keskustelu")));
             res.redirect("/" + req.params(":id"));
             return "ok";
@@ -69,6 +77,12 @@ public class Main {
         //Uuden viestin lisääminen.
         post("/keskustelut/:id", (Request req, Response res) -> {
             int id = Integer.parseInt(req.params(":id"));
+
+            if(req.queryParams("lähettäjä").equals("")||(req.queryParams("viesti").equals(""))){
+                res.redirect("/keskustelut/" + id);
+                return "ok";
+            }
+
             viestiDao.add(new Viesti(req.queryParams("lähettäjä"),
                     req.queryParams("viesti"), id));
             res.redirect("/keskustelut/" + id);

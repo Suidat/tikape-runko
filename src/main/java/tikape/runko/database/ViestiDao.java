@@ -167,7 +167,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         stmnt.close();
         connection.close();
         if (set.isEmpty())
-            return null;
+            return "...Ei viestejä";
         return set.last();
     }
 

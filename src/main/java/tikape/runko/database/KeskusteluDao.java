@@ -174,9 +174,12 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         stmnt.close();
         connection.close();
         ViestiDao viestiDao = new ViestiDao(database);
+        if(!list.isEmpty()){
         for(int i : list){
             set.add(viestiDao.viimeisinViesti(i));
-        }
+        }}
+        if(set.isEmpty())
+            return "Ei yhtään viestiä";
         return set.last();
     }
 
