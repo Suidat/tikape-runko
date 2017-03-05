@@ -17,6 +17,10 @@ import tikape.runko.domain.Keskustelu;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+
         Database database = new Database("jdbc:sqlite:keskustelupalsta.db");
         database.init();
 
