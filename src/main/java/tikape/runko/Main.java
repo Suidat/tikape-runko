@@ -20,6 +20,12 @@ public class Main {
         if (System.getenv("PORT") != null) {
             port(Integer.valueOf(System.getenv("PORT")));
         }
+        String jdbcOsoite = "jdbc:sqlite:keskustelupalsta.db";
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        } 
+
+        Database db = new Database(jdbcOsoite);
 
         Database database = new Database("jdbc:sqlite:keskustelupalsta.db");
         database.init();
