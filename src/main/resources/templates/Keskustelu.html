@@ -23,11 +23,14 @@
         }
 
     </style>
-    <title th:each="keskustelu : ${title}">Title</title>
+    <title th:text="${title.nimi}">Title</title>
 </head>
+<header>
+    <p><a th:href="${'/' + title.aihe}">Takaisin</a></p>
+    <h1 th:text="${title.nimi}">Nimi</h1>
+</header>
 <body>
-<h1 th:each="keskustelu : ${title}">
-    <span th:text="${keskustelu.nimi}">enkä?</span></h1>
+
 
 
 <table th:each="viesti : ${viestilista}">

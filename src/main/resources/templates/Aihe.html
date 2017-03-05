@@ -20,12 +20,13 @@
 
 <body>
 <header th:each="aihe : ${title}">
+    <p><a th:href="${'/'}">Takaisin</a></p>
     <h1 th:text="${aihe.nimi}">Aihe</h1>
 </header>
 
 <table>
 
-    <th align="center">Aihe</th>
+    <th align="center">Keskustelu</th>
     <th align="center">Viestien määrä</th>
     <th align="center">Viimeisin Viesti</th>
     <tr th:each="keskustelu : ${keskustelulista}">

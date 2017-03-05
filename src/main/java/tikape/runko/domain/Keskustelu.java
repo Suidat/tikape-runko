@@ -1,16 +1,15 @@
 package tikape.runko.domain;
 
-import java.util.Date;
 
 public class Keskustelu {
     private int id;
     private String nimi;
     private String aika;
-    private int aiheId;
+    private int aihe;
     private int maara;
 
     public Keskustelu(int id, String nimi){
-        this.aiheId = id;
+        this.aihe = id;
         this.nimi = nimi;
     }
 
@@ -19,17 +18,16 @@ public class Keskustelu {
         this.nimi = nimi;
     }
 
-    public Keskustelu(String nimi, int aiheId, String aika){
+    public Keskustelu(String nimi, int aihe, String aika){
         this.nimi=nimi;
-        this.aiheId=aiheId;
+        this.aihe=aihe;
         this.aika = aika;
     }
     
-    public Keskustelu(int tunnus, String nimi, String aika, int aiheId) {
+    public Keskustelu(int tunnus, String nimi, int aihe) {
         this.id = tunnus;
         this.nimi = nimi;
-        this.aika = aika;
-        this.aiheId = aiheId;
+        this.aihe = aihe;
     }
 
     public Keskustelu(String nimi, int id, int maara) {
@@ -46,9 +44,9 @@ public class Keskustelu {
         return this.nimi;
     }
 
-    public int getAiheId() {return this.aiheId;}
+    public int getAiheId() {return this.aihe;}
 
-    public void setAiheId(int tunnus){this.aiheId = tunnus;}
+    public void setAiheId(int tunnus){this.aihe = tunnus;}
 
     public void setId(int tunnus) {
         this.id = tunnus;

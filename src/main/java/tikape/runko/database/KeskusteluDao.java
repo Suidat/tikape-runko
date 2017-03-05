@@ -25,9 +25,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         if (!hasOne) {
             return null;
         }
-        Integer id = rs.getInt("id");
+        int id = rs.getInt("id");
         String nimi = rs.getString("nimi");
-        Keskustelu keskustelu = new Keskustelu(id, nimi);
+        int aihe = rs.getInt("aihe_id");
+        Keskustelu keskustelu = new Keskustelu(id, nimi,aihe);
 
         rs.close();
         stmt.close();
