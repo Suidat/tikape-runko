@@ -38,11 +38,11 @@
     <tr>
         <td class = "nimi" align="left"> <small th:text="${viesti.lahettaja}">lähettäjä</small></td>
         <td class = "aika" align="left"> <small th:text="${viesti.aika}">aika</small></td>
+        <td align="center"><a th:href="${'/poista/viesti/' + viesti.id}">Poista</a></td>
     </tr>
     <tr>
         <td class = "teksti" colspan="2" align= "left" th:text="${viesti.teksti}">Tekstiä</td>
     </tr>
-
 </table>
 <pre>
 

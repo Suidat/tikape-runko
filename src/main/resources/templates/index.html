@@ -27,6 +27,7 @@
                 <td align="center"> <a th:href="${'/'+aihe.id}"><span th:text="${aihe.nimi}">Linkki</span></a></td>
                 <td align="center" th:text="${aihe.maara}">1</td>
                 <td align="center" th:text="${aihe.aika}">01:01:01 01/01/0001</td>
+                <td align="center"><a th:href="${'/poista/aihe/' + aihe.id}">Poista</a></td>
             </tr>
         </table>
         <pre>

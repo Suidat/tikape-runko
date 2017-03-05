@@ -91,6 +91,14 @@ public class Main {
 
         //Aiheen poistaminen.
         get("/poista/aihe/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            return new ModelAndView(map, "login");
+        }, new ThymeleafTemplateEngine());
+
+        post("/poista/aihe/:id", (req,res) ->{
+            Aihe a = aiheDao.findOne(Integer.parseInt(req.params(":id")));
+            if(req.queryParams("username").equals("admin")&&
+                    req.queryParams("password").equals("Tämä salasana on helppo murtaa")&&a!=null)
             aiheDao.delete(Integer.parseInt(req.params(":id")));
             res.redirect("/");
             return "ok";
@@ -98,19 +106,36 @@ public class Main {
 
         //Keskustelun poistaminen,
         get("/poista/keskustelu/:id", (req, res) -> {
-            int id = Integer.parseInt(req.params(":id"));
-            int tanne = keskusteluDao.findOne(id).getAihe();
-            keskusteluDao.delete(id);
-            res.redirect("/" + tanne);
+            HashMap map = new HashMap<>();
+            return new ModelAndView(map, "login");
+        }, new ThymeleafTemplateEngine());
+
+        post("/poista/keskustelu/:id", (req,res) ->{
+            Keskustelu k = keskusteluDao.findOne(Integer.parseInt(req.params(":id")));
+
+            if(req.queryParams("username").equals("admin")&&
+                    req.queryParams("password").equals("Tämä salasana on helppo murtaa")&&k!=null)
+                keskusteluDao.delete(Integer.parseInt(req.params(":id")));
+            if(k!=null)
+            res.redirect("/" + k.getAihe());
+            else res.redirect("/");
             return "ok";
         });
 
         //Viestin poistaminen.
         get("/poista/viesti/:id", (req, res) -> {
-            int id = Integer.parseInt(req.params(":id"));
-            int tanne = viestiDao.findOne(id).getKeskusteluId();
-            viestiDao.delete(id);
-            res.redirect("/keskustelut/" + tanne);
+            HashMap map = new HashMap<>();
+            return new ModelAndView(map, "login");
+        }, new ThymeleafTemplateEngine());
+
+        post("/poista/viesti/:id", (req,res) ->{
+            Viesti v = viestiDao.findOne(Integer.parseInt(req.params(":id")));
+            if(req.queryParams("username").equals("admin")&&
+                    req.queryParams("password").equals("Tämä salasana on helppo murtaa")&&v!=null)
+                viestiDao.delete(Integer.parseInt(req.params(":id")));
+            if(v!=null)
+            res.redirect("/keskustelut/"+v.getKeskusteluId());
+            else res.redirect("/");
             return "ok";
         });
     }
