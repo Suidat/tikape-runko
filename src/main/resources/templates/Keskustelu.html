@@ -9,14 +9,17 @@
             table-layout: fixed;
             border-collapse: collapse;
         }
-        td.info{
-            width: 120px;;
+        td.aika{
             word-wrap: break-word;
         }
-        td, th {
+        td.nimi{
+            width: 180px;
+            word-wrap: break-word;
+        }
+        td.teksti{
             word-wrap: break-word;
             padding: 5px;
-            width: 200px;
+            width: 600px;
         }
 
     </style>
@@ -30,16 +33,17 @@
 <table th:each="viesti : ${viestilista}">
 
     <tr>
-        <td class = "info" align="left"> <small th:text="${viesti.lahettaja}">lähettäjä</small></td>
-        <td class = "info" align="left"> <small th:text="${viesti.aika}">aika</small></td>
+        <td class = "nimi" align="left"> <small th:text="${viesti.lahettaja}">lähettäjä</small></td>
+        <td class = "aika" align="left"> <small th:text="${viesti.aika}">aika</small></td>
     </tr>
     <tr>
-        <td align= "left" colspan="2" th:text="${viesti.teksti}">Tekstiä</td>
+        <td class = "teksti" colspan="2" align= "left" th:text="${viesti.teksti}">Tekstiä</td>
     </tr>
-    <tr><td align="center" colspan="2"> </td></tr>
 
 </table>
+<pre>
 
+</pre>
 <form method="POST">
     <span> Viesti: </span>
     <input type="text" name="viesti"/>
