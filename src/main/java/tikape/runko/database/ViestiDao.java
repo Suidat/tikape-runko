@@ -33,7 +33,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         String sisalto = rs.getString("message");
         String lahettaja = rs.getString("sender");
         String aika = rs.getString("time");
-        int keskustelu = rs.getInt("keskustelu_Id");
+        int keskustelu = rs.getInt("keskustelu_id");
         Viesti o = new Viesti(id, sisalto, lahettaja, aika, keskustelu);
 
         rs.close();
