@@ -106,7 +106,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             String sisalto = rs.getString("message");
             String aika = rs.getString("time");
             int keskustelu = rs.getInt("keskustelu_Id");
-            viestit.add(new Viesti(id, sisalto, lahettaja, aika, keskustelu));
+            viestit.add(new Viesti(id, lahettaja, sisalto, aika, keskustelu));
         }
 
         rs.close();

@@ -1,49 +1,52 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8"/>
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0"/>
     <style>
         table {
             table-layout: fixed;
             border-collapse: collapse;
         }
-
-
-
+        td.info{
+            width: 120px;;
+            word-wrap: break-word;
+        }
         td, th {
             word-wrap: break-word;
             padding: 5px;
-            width: 250px;
+            width: 200px;
         }
+
     </style>
     <title th:each="keskustelu : ${title}">Title</title>
 </head>
 <body>
-    <h1 th:each="keskustelu : ${title}">
-    <span th:text = "${keskustelu.nimi}">enkä?</span> </h1>
+<h1 th:each="keskustelu : ${title}">
+    <span th:text="${keskustelu.nimi}">enkä?</span></h1>
 
-    <table>
 
-        <th align="center">Lähettäjä</th>
-        <th align="center">Viesti</th>
-        <th align="center">Aika</th>
+<table th:each="viesti : ${viestilista}">
 
-          <tr class="firstLine" th:each="viesti : ${viestilista}">
-                
-                    <td align="center" th:text="${viesti.teksti}">some</td>
-                    <td align="center" th:text="${viesti.lahettaja}">any</td>
-                    <td align="center" th:text="${viesti.aika}">time</td>
-            </tr>
+    <tr>
+        <td class = "info" align="left"> <small th:text="${viesti.lahettaja}">lähettäjä</small></td>
+        <td class = "info" align="left"> <small th:text="${viesti.aika}">aika</small></td>
+    </tr>
+    <tr>
+        <td align= "left" colspan="2" th:text="${viesti.teksti}">Tekstiä</td>
+    </tr>
+    <tr><td align="center" colspan="2"> </td></tr>
 
-    </table>
-    
-    <form method="POST">
-        <span> Viesti: </span>
-            <input type="text" name="viesti"/>
-        <span> Lähettäjä: </span>
-            <input type="text" name="lähettäjä"/>
-            <input type="submit" value="lähetä"/>
-        </form>
+</table>
+
+<form method="POST">
+    <span> Viesti: </span>
+    <input type="text" name="viesti"/>
+    <span> Lähettäjä: </span>
+    <input type="text" name="lähettäjä"/>
+    <input type="submit" value="lähetä"/>
+</form>
 
 </body>
 </html>
