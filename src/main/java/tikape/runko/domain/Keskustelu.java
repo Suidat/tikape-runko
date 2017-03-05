@@ -44,9 +44,9 @@ public class Keskustelu {
         return this.nimi;
     }
 
-    public int getAiheId() {return this.aihe;}
+    public int getAihe() {return this.aihe;}
 
-    public void setAiheId(int tunnus){this.aihe = tunnus;}
+    public void setAihe(int tunnus){this.aihe = tunnus;}
 
     public void setId(int tunnus) {
         this.id = tunnus;

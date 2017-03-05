@@ -99,7 +99,7 @@ public class Main {
         //Keskustelun poistaminen,
         get("/poista/keskustelu/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
-            int tanne = keskusteluDao.findOne(id).getAiheId();
+            int tanne = keskusteluDao.findOne(id).getAihe();
             keskusteluDao.delete(id);
             res.redirect("/" + tanne);
             return "ok";

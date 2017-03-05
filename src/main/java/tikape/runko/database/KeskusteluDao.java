@@ -69,7 +69,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmnt = connection.prepareStatement("INSERT INTO Keskustelut (nimi, aihe_id) VALUES (?,?)");
         stmnt.setObject(1, lisattava.getNimi());
-        stmnt.setObject(2, lisattava.getAiheId());
+        stmnt.setObject(2, lisattava.getAihe());
         stmnt.execute();
         stmnt.close();
         connection.close();

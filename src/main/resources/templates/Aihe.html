@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:each="aihe : ${title}">
+<head>
     <style>
         table {
             table-layout: fixed;
@@ -14,14 +14,14 @@
             width: 200px;
         }
     </style>
-    <title th:text="${aihe.nimi}"><span >jotain</span></title>
+    <title th:text="${title.nimi +  ' - Mielipide Upgrade'}">Title</title>
     <meta charset="UTF-8"/>
 </head>
 
 <body>
-<header th:each="aihe : ${title}">
+<header>
     <p><a th:href="${'/'}">Takaisin</a></p>
-    <h1 th:text="${aihe.nimi}">Aihe</h1>
+    <h1 th:text="${title.nimi}">Aihe</h1>
 </header>
 
 <table>
